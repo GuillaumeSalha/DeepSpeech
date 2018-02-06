@@ -1,5 +1,6 @@
 import pandas
 import tensorflow as tf
+import numpy as np
 
 from threading import Thread
 from math import ceil
@@ -87,7 +88,11 @@ class DataSet(object):
         self.next_index = next_index
         self.files = None
         for csv in csvs:
-            file = pandas.read_csv(csv, encoding='utf-8')
+            file = pandas.read_csv(csv, encoding='utf-8', dtype={
+                "wav_filename": str,
+                "wav_filesize": np.int32,
+                "transcript": str
+            })
             if self.files is None:
                 self.files = file
             else:
